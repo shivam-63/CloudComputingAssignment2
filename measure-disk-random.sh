@@ -33,16 +33,11 @@ unset IFS
 
 # We need the length of our array to find the median
 length=${#results[@]}
-echo $length
 
 if (( $length % 2 == 0 )) ; then
 	# print an average of the 2 middle terms and multiply by 1024 * 1024 to transform MiB/s to B/s
-	#awk "BEGIN {printf \"%.1f\", (${sorted_array[($length-1)/2]}+${sorted_array[($length-1)/2 + 1]}) / 2 * 1024 * 1024}"
-	echo 1
-	echo $(echo "scale=3; (${sorted_array[($length-1)/2} + ${sorted_array[($length-1)/2 + 1]}) / 2 * 1024 * 1024" |bc -l)
+	echo $(echo "scale=0; (${sorted_array[($length-1)/2]} + ${sorted_array[($length-1)/2 + 1]}) / 2 * 1024 * 1024" |bc -l)
 else
 	# If its odd we just output the middle value
-	#awk "BEGIN {printf \"%.1f\", ${sorted_array[$length / 2]} * 1024 * 1024}"
-	echo 2
-	echo $(echo "scale=3; (${sorted_array[$length / 2]}) * 1024 * 1024)
+	echo $(echo "scale=0; ${sorted_array[$length / 2]} * 1024 * 1024" | bc -l)
 fi
