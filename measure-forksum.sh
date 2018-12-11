@@ -2,7 +2,7 @@
 EXECUTABLE="forksum"
 if [ ! -e $EXECUTABLE ] ; then
 # echo "Compiling memsweep.c (requires GNU compiler collection) "
-	gcc -O -o forksum forksum.c -lm
+	gcc -m32 -o forksum forksum.c 
 fi
 
 declare -a results
