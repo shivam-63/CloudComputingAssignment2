@@ -1,0 +1,9 @@
+# build a docker image
+$ docker build -t testserver .
+
+# run a container
+docker run -p 80:80 testserver
+
+# run a container loading a volume to store a file with results
+$ docker run -v /home/maciek/Documents/CCA2/Docker/src:/data testcontainer .
+
