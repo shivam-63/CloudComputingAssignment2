@@ -3,7 +3,8 @@
 nginx_path=$1
 
 flush_cache() {
-	sync; echo 1 > /proc/sys/vm/drop_caches
+	# sync; echo 1 > /proc/sys/vm/drop_caches
+	rm -rf /etc/nginx/cache/*
 }
 
 for i in `seq 1 48`; do
@@ -22,6 +23,5 @@ for i in `seq 1 48`; do
 	flush_cache	
 
 	echo $(printf "%s\n" $(date +%s)",";./measure-nginx.sh $nginx_path) >> measure-nginx.csv
-	flush_cache	
 
 done
