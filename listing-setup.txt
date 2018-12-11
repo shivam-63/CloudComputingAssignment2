@@ -5,10 +5,16 @@ $ sudo egrep '(vmx|svm)' /proc/cpuinfo
 $ sudo apt-get install -y qemu-kvm qemu virt-manager virt-viewer libvirt-bin
 
 # Create a virtual hard disk image
-$ qemu-img create ubuntu.img 3G
+$ qemu-img create debian.qcow2 5G
 
 # Boot the virtual machine using the downloaded debian image
-$ qemu-system-x86_64 -hda ubuntu.img -boot d -cdrom debian-9.6.0-i386-netinst.iso -m 640
+$ qemu-system-x86_64 -hda debian.qcow2 -boot d -cdrom debian-9.6.0-i386-netinst.iso -m 640
+
+# To start the image with the kvm support
+$ qemu-system-x86_64 -hda debian.qcow2
+
+# To start the image without the kvm support
+$ qemu-system-x86_64 -no-kvm -hda debian.qcow2
 
 
 
