@@ -1,0 +1,31 @@
+# Check if the machine supports hardware virtualization
+$ sudo egrep '(vmx|svm)' /proc/cpuinfo
+
+# Install the latest qemu package and the virt-manager
+$ sudo apt-get install -y qemu-kvm qemu virt-manager virt-viewer libvirt-bin
+
+# Create a virtual hard disk image
+$ qemu-img create ubuntu.img 3G
+
+# Boot the virtual machine using the downloaded debian image
+$ qemu-system-x86_64 -hda ubuntu.img -boot d -cdrom debian-9.6.0-i386-netinst.iso -m 640
+
+
+
+# Add the GPG key for the official docker repository
+$ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+
+# Add the Docker repo to the APT sources of your machine
+$ sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+
+# Install docker
+$ sudo apt-get install -y docker-ce
+
+
+https://www.itzgeek.com/how-tos/linux/ubuntu-how-tos/install-kvm-qemu-on-ubuntu-14-10.html
+
+https://www.itzgeek.com/how-tos/linux/ubuntu-how-tos/configure-bridged-networking-for-kvm-on-ubuntu-14-10.html
+
+https://www.unixmen.com/how-to-install-and-configure-qemu-in-ubuntu/
+
+https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-16-04
