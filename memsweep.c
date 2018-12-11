@@ -14,7 +14,7 @@
 #include <time.h>
 #include <float.h>
 
-#define ARR_SIZE (8096* 4096)
+#define ARR_SIZE (1024* 512)
 
 static double second(void)
 {
@@ -32,7 +32,7 @@ void main(void)
   time = second();
   for (i = 0; i < 10 * ARR_SIZE; i++)
   {
-    array[(4096 * i + i) % ARR_SIZE] = 1 + array[i % ARR_SIZE];
+    array[(512 * i + i) % ARR_SIZE] = 1 + array[i % ARR_SIZE];
   }
   free((void*)array);
   time = second() - time;
