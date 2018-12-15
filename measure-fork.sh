@@ -2,7 +2,7 @@
 EXECUTABLE="forksum"
 if [ ! -e $EXECUTABLE ] ; then
 # echo "Compiling memsweep.c (requires GNU compiler collection) "
-	gcc -m32 -o forksum forksum.c 
+	gcc -O -o forksum forksum.c -lm
 fi
 
 declare -a results
@@ -22,10 +22,7 @@ while [ $SECONDS -lt $end ]; do
 # This way it is impossible to go over the time limit
                 result= $(timeout $time_left /usr/bin/time -f "%e" ./forksum.exe) 
         else
-                #result= $( {time timeout $time_left ./${EXECUTABLE} 100 1000; } 2>&1)
                 result=$( { time timeout $time_left ./${EXECUTABLE} -args 100 1000; } 2>&1 | grep "real" | sed 's/[^0-9.]//g' | bc -l)
-            	#result=$(timeout $time_left /usr/bin/time -f "%e" ./${EXECUTABLE} 100 1000)
-		
         fi
 # If we had to ttimeout our execution than we will only add the result if it is not empty
 	
