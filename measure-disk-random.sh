@@ -18,7 +18,7 @@ while [ $SECONDS -lt $end ]; do
 	# Run fio random-read, grep the line containing aggregated read speed result
 	# get the 3rd item of the output line (aggrb)
 	# Leave only digits in the output to get a read speed in KB/s
-    result=$(timeout $time_left fio --name=randread --ioengine=libaio --iodepth=2 --rw=randread --bs=4k --direct=0 --size=16M --numjobs=1 --runtime=15 --group_reporting | grep aggrb | awk '{printf $3}' | sed 's/[^0-9.]//g')
+    result=$(timeout $time_left fio --randrepeat=1 --ioengine=libaio --direct=1 --gtod_reduce=1 --name=test --filename=test --bs=4k --iodepth=64 --size=1G --readwrite=randwrite | grep "iops" | awk '{printf $4}' | sed 's/[^0-9.]//g')
 
 	# If we had to timeout our execution than we will only add the result if it is not empty
     if ! [ -z ${result} ] ; then
@@ -35,9 +35,9 @@ unset IFS
 length=${#results[@]}
 
 if (( $length % 2 == 0 )) ; then
-	# print an average of the 2 middle terms and multiply by 1024 * 1024 to transform MiB/s to B/s
-	echo $(echo "scale=0; (${sorted_array[($length-1)/2]} + ${sorted_array[($length-1)/2 + 1]}) / 2 * 1024 * 1024" |bc -l)
+	# print an average of the 2 middle terms.
+	echo $(echo "scale=0; (${sorted_array[($length-1)/2]} + ${sorted_array[($length-1)/2 + 1]}) / 2" | bc -l)
 else
 	# If its odd we just output the middle value
-	echo $(echo "scale=0; ${sorted_array[$length / 2]} * 1024 * 1024" | bc -l)
+	echo $(echo "scale=0; ${sorted_array[$length / 2]}" | bc -l)
 fi
