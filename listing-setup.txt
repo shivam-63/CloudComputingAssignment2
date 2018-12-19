@@ -27,11 +27,8 @@ $ sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ub
 # Install docker
 $ sudo apt-get install -y docker-ce
 
+# Build a docker image
+$ docker build -t testcontainer .
 
-https://www.itzgeek.com/how-tos/linux/ubuntu-how-tos/install-kvm-qemu-on-ubuntu-14-10.html
-
-https://www.itzgeek.com/how-tos/linux/ubuntu-how-tos/configure-bridged-networking-for-kvm-on-ubuntu-14-10.html
-
-https://www.unixmen.com/how-to-install-and-configure-qemu-in-ubuntu/
-
-https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-16-04
+# Run a docker image with a loaded volume to store the results on the host machine 
+$ docker run -v /home/maciek/Documents/CCA2/Docker/src:/data testcontainer .
